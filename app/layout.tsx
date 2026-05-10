@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { TicketProvider } from "@/contexts/TicketContext";
 import { clientConfig } from "@/client.config";
@@ -40,7 +41,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${bebasNeue.variable}`}>
-      <body><TicketProvider>{children}</TicketProvider></body>
+      <body>
+        <TicketProvider>{children}</TicketProvider>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      </body>
     </html>
   );
 }

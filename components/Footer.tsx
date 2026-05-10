@@ -29,14 +29,14 @@ export default function Footer() {
             <div className="footer-tagline">{event.dateDisplay} · {event.timeDisplay} · {event.platform}</div>
           </div>
 
-          <div className="footer-socials">
+          {/* <div className="footer-socials">
             <a href={brand.instagramUrl} className="footer-social-btn" aria-label="Instagram">
               <InstagramIcon />
             </a>
             <a href={brand.youtubeUrl} className="footer-social-btn" aria-label="YouTube">
               <YouTubeIcon />
             </a>
-          </div>
+          </div> */}
         </div>
 
         {/* Disclaimer block */}

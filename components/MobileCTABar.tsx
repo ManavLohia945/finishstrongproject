@@ -21,3 +21,5 @@ export default function MobileCTABar({ funnel = "funnel1" }: { funnel?: string }
     </div>
   );
 }
+
+

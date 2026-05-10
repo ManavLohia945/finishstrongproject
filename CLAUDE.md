@@ -236,6 +236,7 @@ Every client project uses this exact structure:
 │
 ├── public/
 │   ├── coach1.png
+    ├── coach1-alt.png
 │   ├── coach1-action.png
 │   └── coach2.png
 │
@@ -443,6 +444,7 @@ From the complete brief, determine:
 
 ### ASSETS CHECKLIST
 - [ ] coach1.png in /public
+- [ ] coach1-alt.png in /public
 - [ ] coach1-action.png in /public
 - [ ] coach2.png in /public
 - [ ] All image filenames match CLIENT_BRIEF.md references

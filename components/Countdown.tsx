@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { clientConfig } from "@/client.config";
 
 const EVENT_DATE = new Date(clientConfig.event.countdownTarget);
@@ -40,13 +40,13 @@ export default function Countdown() {
           [time.secs, "Secs"],
         ] as [string, string][]
       ).map(([value, label], i) => (
-        <>
-          {i > 0 && <span className="countdown-sep" key={`sep-${i}`}>:</span>}
-          <div className="countdown-unit" key={label}>
+        <Fragment key={label}>
+          {i > 0 && <span className="countdown-sep">:</span>}
+          <div className="countdown-unit">
             <span className="countdown-num">{value}</span>
             <span className="countdown-unit-label">{label}</span>
           </div>
-        </>
+        </Fragment>
       ))}
     </div>
   );

@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import MarathonerFunnelPage from "@/components/MarathonerFunnelPage";
 
 export default function Home() {
-  redirect("/executive");
+  return <MarathonerFunnelPage />;
 }

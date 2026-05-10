@@ -110,7 +110,7 @@
 ### Primary Coach
 - Name: [full name]
 - Title line: [credentials summary]
-- Photo filename: [e.g. coach1.png]
+- Photo filename: [e.g. coach1-alt.png]
 - Action photo filename: [e.g. coach1-action.png]
 - Bio paragraph 1: [before — where they started]
 - Bio paragraph 2: [the struggle]

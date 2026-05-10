@@ -11,7 +11,7 @@ export function TicketProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setTickets((prev) => (prev > 1 ? prev - 1 : prev));
-    }, 30000);
+    }, 20000);
     return () => clearInterval(interval);
   }, []);
 

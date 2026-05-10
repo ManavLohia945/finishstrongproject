@@ -80,12 +80,12 @@ function ThankYouContent() {
 
       {/* ── BOTTOM — navy ── */}
       <Footer />
-      <section className="ty-bottom">
+      {/* <section className="ty-bottom">
         <p className="ty-bottom-text reveal">{thankYou.bottomNote}</p>
         <a href={backHref} className="ty-back-link reveal">
           ← Back to the webinar page
         </a>
-      </section>
+      </section> */}
     </main>
   );
 }
