@@ -42,8 +42,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Check if Razorpay secret is configured
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      console.error('[verify-payment] Razorpay secret not configured');
+      return NextResponse.json(
+        { success: false, error: 'Payment verification not configured.' },
+        { status: 500 }
+      );
+    }
+
     const expectedSignature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
       .update(`${orderId}|${paymentId}`)
       .digest('hex');
 
