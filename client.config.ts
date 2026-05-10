@@ -199,7 +199,7 @@ export const clientConfig = {
     slug: "marathoner",
     pill: "For Triathletes, Marathoners & Endurance Athletes",
     heroH1Main: "Crush Your First (or Next)",
-    heroH1AnimatedText: "Ironman Triathlon in Sub-6 Hours",
+    heroH1AnimatedText: "Ironman Goa 70.3 in Sub-6 Hours",
     heroChallengeLine: "Without guessing your training, gambling your pacing, or dying 10km from the finish",
     heroBodyCopy: "In this 2-day webinar, a 18× Ironman finisher hands you the complete race blueprint for Triathlon — the same Australian-coached system that most Indian athletes spend years trying to piece together on their own, and never quite get right.",
     heroImage: "/coach1-alt.png",
