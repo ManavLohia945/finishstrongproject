@@ -95,13 +95,24 @@ export async function POST(req: NextRequest) {
 
     const webhookUrl = process.env.PABBLY_WEBHOOK_URL;
     if (webhookUrl) {
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(pabblyPayload),
-      }).catch(err => console.error('[verify-payment] Pabbly webhook failed:', err));
+      console.log('[verify-payment] Firing Pabbly webhook to:', webhookUrl);
+      try {
+        const webhookResponse = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(pabblyPayload),
+        });
+        
+        if (webhookResponse.ok) {
+          console.log('[verify-payment] Pabbly webhook successful:', webhookResponse.status);
+        } else {
+          console.error('[verify-payment] Pabbly webhook failed with status:', webhookResponse.status, webhookResponse.statusText);
+        }
+      } catch (err) {
+        console.error('[verify-payment] Pabbly webhook error:', err);
+      }
     } else {
-      console.warn('[verify-payment] PABBLY_WEBHOOK_URL not set — skipping webhook');
+      console.error('[verify-payment] CRITICAL: PABBLY_WEBHOOK_URL not set — webhook skipped');
     }
 
     return NextResponse.json({ success: true, paymentId });
