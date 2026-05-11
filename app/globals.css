@@ -977,18 +977,27 @@ body {
 }
 .ty-back-link:hover { color: #fff; }
 
-/* ── MOBILE STICKY CTA BAR ── */
+/* ── STICKY CTA BAR (all screen sizes) ── */
 .mobile-cta-bar {
-  display: none;
+  display: flex;
   position: fixed;
   bottom: 0; left: 0; right: 0; z-index: 998;
   background: var(--navy);
   border-top: 2px solid rgba(232,54,10,0.45);
-  padding: 10px 16px;
-  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   box-shadow: 0 -8px 32px rgba(0,0,0,0.45);
-  align-items: center; gap: 12px;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
+.mobile-cta-inner {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.has-sticky-cta { padding-bottom: 76px; }
 .mobile-cta-left { flex-shrink: 0; }
 .mobile-cta-pricing { display: flex; align-items: baseline; gap: 7px; }
 .mobile-cta-was { font-size: 11px; color: rgba(255,255,255,0.32); text-decoration: line-through; }
@@ -998,11 +1007,13 @@ body {
 }
 .mobile-cta-urgency { font-size: 11px; color: rgba(255,255,255,0.42); margin-top: 2px; }
 .mobile-cta-btn {
-  flex: 1;
+  flex: 1 1 auto;
+  max-width: 240px;
+  min-width: 140px;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   background: var(--red);
   color: #fff; border-radius: 12px;
-  padding: 14px 16px; font-size: 15px; font-weight: 800;
+  padding: 14px 20px; font-size: 15px; font-weight: 800;
   text-decoration: none;
   box-shadow: 0 4px 18px rgba(232,54,10,0.42);
   transition: background 0.2s ease, transform 0.12s ease;
@@ -1025,16 +1036,19 @@ body {
 
 /* ── RESPONSIVE ── */
 
-/* Sticky bar show + clearance */
-@media (max-width: 768px) {
-  .mobile-cta-bar { display: flex; }
-  .has-sticky-cta { padding-bottom: 76px; }
+/* iPad (601–860px) — 2-col coach layout, portrait image */
+@media (min-width: 601px) and (max-width: 860px) {
+  .coach1-layout { grid-template-columns: 260px 1fr; gap: 32px; }
+  .coach1-img-wrap { aspect-ratio: 3/4; max-height: none; }
+  .coach1-content { text-align: left; }
+  .coach2-block { grid-template-columns: 1fr; padding: 28px 24px; }
+  .coach2-img-wrap { width: 90px; height: 90px; border-radius: 50%; }
 }
 
-/* 860px — coaches stack */
-@media (max-width: 860px) {
+/* Mobile (≤600px) — single column, portrait image centered */
+@media (max-width: 600px) {
   .coach1-layout { grid-template-columns: 1fr; }
-  .coach1-img-wrap { aspect-ratio: 1.3333; max-height: 320px; }
+  .coach1-img-wrap { aspect-ratio: 3/4; max-height: none; width: min(280px, 75vw); margin: 0 auto; }
   .coach1-content { text-align: center; }
   .coach-divider { margin: 0 auto 24px; }
   .coach-pills { justify-content: center; }
@@ -1042,9 +1056,6 @@ body {
 
 /* 768px — tablet */
 @media (max-width: 768px) {
-  /* Section CTAs hidden — sticky bar handles registration */
-  .hero-cta-block, .cta-block, .faq-cta-wrap { display: none !important; }
-
   /* Hero */
   .hero-layout { grid-template-columns: 1fr; }
   .hero-inner { padding: 40px 20px 32px; }
@@ -1841,10 +1852,10 @@ body {
 
 /* iPad portrait + tablet — collapse to single column */
 @media (max-width: 860px) {
-  .checkout-summary-mobile { display: block; margin: 12px 16px 0; }
+  .checkout-summary-mobile { display: block; margin: 12px 20px 0; }
   .checkout-main {
     grid-template-columns: 1fr;
-    padding: 16px 16px 100px;
+    padding: 16px 20px 100px;
     gap: 16px;
   }
   .checkout-summary { display: none; }
@@ -1861,16 +1872,16 @@ body {
   .checkout-secure-badge { font-size: 11px; }
   /* Stack first + last name */
   .checkout-fields-row { grid-template-columns: 1fr; gap: 16px; }
-  .checkout-form-panel { padding: 22px 16px; border-radius: 14px; }
+  .checkout-form-panel { padding: 22px 20px; border-radius: 14px; }
   .checkout-form-heading { margin-bottom: 20px; }
   /* 16px minimum prevents iOS Safari from auto-zooming on input focus */
   .checkout-input { font-size: 16px; padding: 14px 14px; }
   .phone-digit-input { font-size: 16px; }
   .country-search input { font-size: 16px; }
   /* Dropdown fills available width on narrow phones */
-  .country-dropdown { width: calc(100vw - 32px); left: 0; }
+  .country-dropdown { width: calc(100vw - 40px); left: 0; }
   /* Mobile summary flush to page edges */
-  .checkout-summary-mobile { margin: 8px 12px 0; border-radius: 12px; padding: 12px 14px; }
+  .checkout-summary-mobile { margin: 8px 20px 0; border-radius: 12px; padding: 12px 14px; }
   .checkout-summary-mobile-title { font-size: 13px; }
   /* Toast wraps on narrow screens */
   .checkout-toast {

@@ -52,7 +52,7 @@ export const clientConfig = {
     timeDisplay: "11am – 12:30pm IST",
     platform: "Live Zoom Session",
     countdownTarget: "2026-05-23T05:30:00Z",
-    thankYouCommunityUrl: "#",
+    thankYouCommunityUrl: "https://chat.whatsapp.com/BbWdVQFYwWa966f7c29wnq",
   },
 
   // ── Pricing ───────────────────────────────────────────────────────────────

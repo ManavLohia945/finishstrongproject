@@ -327,7 +327,7 @@ function MobileSummary() {
             <span className="checkout-save-badge">SAVE ₹102</span>
           </div>
           <p className="checkout-guarantee" style={{ marginTop: 8 }}>
-            ✦ 24-hour money-back guarantee
+            ✦ 100% Money Back Guarantee — Zero Risk
           </p>
         </div>
       </div>
@@ -505,11 +505,11 @@ export default function CheckoutForm() {
       // }
 
       const tyParams = new URLSearchParams({ funnel: 'marathoner' });
-      if (utm.source)   tyParams.set('utm_source',   utm.source);
-      if (utm.medium)   tyParams.set('utm_medium',   utm.medium);
+      if (utm.source) tyParams.set('utm_source', utm.source);
+      if (utm.medium) tyParams.set('utm_medium', utm.medium);
       if (utm.campaign) tyParams.set('utm_campaign', utm.campaign);
-      if (utm.content)  tyParams.set('utm_content',  utm.content);
-      if (utm.term)     tyParams.set('utm_term',     utm.term);
+      if (utm.content) tyParams.set('utm_content', utm.content);
+      if (utm.term) tyParams.set('utm_term', utm.term);
       router.push(`/thank-you?${tyParams.toString()}`);
     } catch (err) {
       setLoading(false);
@@ -752,7 +752,7 @@ export default function CheckoutForm() {
               <span className="checkout-price-now">₹97</span>
               <span className="checkout-save-badge">SAVE ₹102</span>
             </div>
-            <p className="checkout-guarantee">✦ 24-hour money-back guarantee</p>
+            <p className="checkout-guarantee">✦ 100% Money Back Guarantee — Zero Risk</p>
           </div>
 
           <div className="checkout-coaches">
