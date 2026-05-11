@@ -40,13 +40,31 @@ const metaCards = [
   { icon: <UsersIcon />,    label: "Hosts", value: funnel2.heroPersonName, delay: "reveal-delay-4" },
 ];
 
+const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'] as const;
+
 export default function MarathonerFunnelPage() {
   const tickets = useTickets();
+  const [checkoutUrl, setCheckoutUrl] = useState(`/checkout?funnel=${funnel2.slug}`);
 
   const timelineRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeStep, setActiveStep] = useState<number>(-1);
+
+  // Build checkout URL with UTM params from current page URL and save to sessionStorage
+  useEffect(() => {
+    const sp = new URLSearchParams(window.location.search);
+    const out = new URLSearchParams({ funnel: funnel2.slug });
+    const stored: Record<string, string> = {};
+    UTM_KEYS.forEach(key => {
+      const val = sp.get(key);
+      if (val) { out.set(key, val); stored[key.replace('utm_', '')] = val; }
+    });
+    if (Object.keys(stored).length > 0) {
+      try { sessionStorage.setItem('fs_utm', JSON.stringify(stored)); } catch { /* noop */ }
+    }
+    setCheckoutUrl(`/checkout?${out.toString()}`);
+  }, []);
 
   useEffect(() => {
     const updateLine = () => {
@@ -140,7 +158,7 @@ export default function MarathonerFunnelPage() {
               <span className="price-badge">Today Only</span>
               <span className="price-now">{pricing.currency}{pricing.priceNow}</span>
             </div>
-            <a href={`/checkout?funnel=${funnel2.slug}`} className="cta">
+            <a href={checkoutUrl} className="cta">
               Grab Your Ticket Now <div className="cta-arrow">→</div>
             </a>
             <div className="guarantee">🛡️ 100% Money Back Guarantee — Zero Risk</div>
@@ -239,7 +257,7 @@ export default function MarathonerFunnelPage() {
               <span className="price-badge">Today Only</span>
               <span className="price-now">{pricing.currency}{pricing.priceNow}</span>
             </div>
-            <a href={`/checkout?funnel=${funnel2.slug}`} className="cta">
+            <a href={checkoutUrl} className="cta">
               Grab Your Ticket Now <div className="cta-arrow">→</div>
             </a>
             <div className="guarantee">🛡️ 100% Money Back Guarantee — Zero Risk</div>
@@ -314,7 +332,7 @@ export default function MarathonerFunnelPage() {
               <span className="price-badge">Today Only</span>
               <span className="price-now">{pricing.currency}{pricing.priceNow}</span>
             </div>
-            <a href={`/checkout?funnel=${funnel2.slug}`} className="cta">
+            <a href={checkoutUrl} className="cta">
               Grab Your Ticket Now <div className="cta-arrow">→</div>
             </a>
             <div className="guarantee">🛡️ 100% Money Back Guarantee — Zero Risk</div>
@@ -350,7 +368,7 @@ export default function MarathonerFunnelPage() {
               <span className="price-badge">Today Only</span>
               <span className="price-now">{pricing.currency}{pricing.priceNow}</span>
             </div>
-            <a href={`/checkout?funnel=${funnel2.slug}`} className="cta">
+            <a href={checkoutUrl} className="cta">
               Grab Your Ticket Now <div className="cta-arrow">→</div>
             </a>
             <div className="guarantee">🛡️ 100% Money Back Guarantee — Zero Risk</div>
@@ -362,7 +380,7 @@ export default function MarathonerFunnelPage() {
       </section>
 
       <Footer />
-      <MobileCTABar funnel={funnel2.slug} />
+      <MobileCTABar checkoutUrl={checkoutUrl} />
     </main>
   );
 }

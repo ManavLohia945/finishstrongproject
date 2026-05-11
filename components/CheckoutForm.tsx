@@ -504,7 +504,13 @@ export default function CheckoutForm() {
       //   }, { eventID: response.razorpay_payment_id });
       // }
 
-      router.push('/thank-you?funnel=marathoner');
+      const tyParams = new URLSearchParams({ funnel: 'marathoner' });
+      if (utm.source)   tyParams.set('utm_source',   utm.source);
+      if (utm.medium)   tyParams.set('utm_medium',   utm.medium);
+      if (utm.campaign) tyParams.set('utm_campaign', utm.campaign);
+      if (utm.content)  tyParams.set('utm_content',  utm.content);
+      if (utm.term)     tyParams.set('utm_term',     utm.term);
+      router.push(`/thank-you?${tyParams.toString()}`);
     } catch (err) {
       setLoading(false);
       const msg = err instanceof Error ? err.message : 'Payment received but verification failed. Please contact us.';

@@ -4,7 +4,7 @@ import { clientConfig } from "@/client.config";
 
 const { pricing } = clientConfig;
 
-export default function MobileCTABar({ funnel = "funnel1" }: { funnel?: string }) {
+export default function MobileCTABar({ checkoutUrl }: { checkoutUrl: string }) {
   const tickets = useTickets();
   return (
     <div className="mobile-cta-bar" aria-label="Register now">
@@ -15,11 +15,9 @@ export default function MobileCTABar({ funnel = "funnel1" }: { funnel?: string }
         </div>
         <div className="mobile-cta-urgency">🔥 Only {tickets} seats left</div>
       </div>
-      <a href={`/thank-you?funnel=${funnel}`} className="mobile-cta-btn">
+      <a href={checkoutUrl} className="mobile-cta-btn">
         Grab Your Seat <span className="mobile-cta-arrow">→</span>
       </a>
     </div>
   );
 }
-
-

@@ -18,7 +18,7 @@ export default function Funnel1Page() {
       <CoachSection />
       <FaqSection />
       <Footer />
-      <MobileCTABar funnel={clientConfig.funnel1.slug} />
+      <MobileCTABar checkoutUrl={`/checkout?funnel=${clientConfig.funnel1.slug}`} />
     </main>
   );
 }
