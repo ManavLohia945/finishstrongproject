@@ -305,7 +305,7 @@ function MobileSummary() {
       <div className={`checkout-summary-expand${open ? ' open' : ''}`}>
         <div className="checkout-summary-expand-inner">
           <div className="checkout-event-pill" style={{ marginBottom: 12 }}>
-            23rd &amp; 24th May · 11am–12:30pm IST
+            23rd &amp; 24th May · 11am–1pm IST
           </div>
           <div className="checkout-divider" />
           <div className="checkout-value-stack" style={{ marginBottom: 12 }}>
@@ -726,7 +726,7 @@ export default function CheckoutForm() {
           <p className="checkout-summary-label">ORDER SUMMARY</p>
           <h2 className="checkout-product-name">Finish Strong — 2-Day Webinar</h2>
           <div className="checkout-event-pill">
-            23rd &amp; 24th May · 11am–12:30pm IST
+            23rd &amp; 24th May · 11am–1pm IST
           </div>
 
           <div className="checkout-divider" />

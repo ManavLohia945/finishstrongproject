@@ -49,7 +49,7 @@ export const clientConfig = {
   // ── Event ─────────────────────────────────────────────────────────────────
   event: {
     dateDisplay: "23rd & 24th May",
-    timeDisplay: "11am – 12:30pm IST",
+    timeDisplay: "11am – 1pm IST",
     platform: "Live Zoom Session",
     countdownTarget: "2026-05-23T05:30:00Z",
     thankYouCommunityUrl: "https://chat.whatsapp.com/BbWdVQFYwWa966f7c29wnq",
@@ -126,7 +126,7 @@ export const clientConfig = {
       },
       {
         title: "Save the Date",
-        desc: "Block 23rd & 24th May, 11am – 12:30pm IST in your calendar right now. This is a live session — no recording, no replay.",
+        desc: "Block 23rd & 24th May, 11am – 1pm IST in your calendar right now. This is a live session — no recording, no replay.",
       },
       {
         title: "Come Prepared",
