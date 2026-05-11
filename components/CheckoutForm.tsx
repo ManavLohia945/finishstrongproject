@@ -418,7 +418,7 @@ export default function CheckoutForm() {
       const orderRes = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 9700, currency: 'INR' }),
+        body: JSON.stringify({ amount: 100, currency: 'INR' }),
       });
 
       if (!orderRes.ok) {
@@ -437,7 +437,7 @@ export default function CheckoutForm() {
 
       const rzp = new window.Razorpay({
         key: keyId ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? '',
-        amount: amount ?? 9700,
+        amount: amount ?? 100,
         currency: 'INR',
         order_id: orderId,
         name: 'Finish Strong',
@@ -698,7 +698,7 @@ export default function CheckoutForm() {
                   </>
                 ) : (
                   <>
-                    Pay ₹97 Now
+                    Pay ₹1 Now
                     <span className="cta-arrow">→</span>
                   </>
                 )}

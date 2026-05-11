@@ -8,6 +8,7 @@ interface CustomerData {
   city: string;
   phone: string;
   countryCode: string;
+  dialCode: string;
 }
 
 interface UtmData {
@@ -63,19 +64,45 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Payment verified — log for now, wire Pabbly/email automation here later
-    console.log('[verify-payment] Verified purchase:', {
-      paymentId,
-      orderId,
-      customer: {
-        name: `${customer.firstName} ${customer.lastName}`,
-        email: customer.email,
-        city: customer.city,
-        phone: `${customer.countryCode}${customer.phone}`,
-      },
-      utm,
-      timestamp: new Date().toISOString(),
-    });
+    // Payment verified — build payload and fire Pabbly webhook (non-blocking)
+    const now = new Date();
+    const pabblyPayload = {
+      // Customer
+      first_name:        customer.firstName,
+      last_name:         customer.lastName,
+      full_name:         `${customer.firstName} ${customer.lastName}`,
+      email:             customer.email,
+      phone:             `${customer.dialCode}${customer.phone}`,
+      city:              customer.city,
+      country_code:      customer.countryCode,
+      // Payment
+      payment_id:        paymentId,
+      order_id:          orderId,
+      amount:            '97',
+      currency:          'INR',
+      payment_date:      now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      payment_time:      now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      payment_timestamp: now.toISOString(),
+      // UTM
+      utm_source:        utm?.source   ?? '',
+      utm_medium:        utm?.medium   ?? '',
+      utm_campaign:      utm?.campaign ?? '',
+      utm_content:       utm?.content  ?? '',
+      utm_term:          utm?.term     ?? '',
+    };
+
+    console.log('[verify-payment] Verified purchase:', pabblyPayload);
+
+    const webhookUrl = process.env.PABBLY_WEBHOOK_URL;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pabblyPayload),
+      }).catch(err => console.error('[verify-payment] Pabbly webhook failed:', err));
+    } else {
+      console.warn('[verify-payment] PABBLY_WEBHOOK_URL not set — skipping webhook');
+    }
 
     return NextResponse.json({ success: true, paymentId });
   } catch (error) {

@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { amount = 9700, currency = 'INR' } = body;
+    const { amount = 100, currency = 'INR' } = body;
 
     const order = await razorpay.orders.create({
       amount,
