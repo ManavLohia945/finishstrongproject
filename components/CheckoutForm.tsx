@@ -704,7 +704,7 @@ export default function CheckoutForm() {
                   </>
                 ) : (
                   <>
-                    Pay ₹1 Now
+                    Pay ₹97 Now
                     <span className="cta-arrow">→</span>
                   </>
                 )}
