@@ -1,38 +1,71 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
+function sha256(value: string): string {
+  return crypto.createHash('sha256').update(value).digest('hex');
+}
+
 async function sendMetaCapiEvent(params: {
   pixelId: string;
   accessToken: string;
   paymentId: string;
   email: string;
   phone: string;
+  firstName: string;
+  lastName: string;
+  city: string;
+  countryCode: string;
+  eventSourceUrl: string;
   fbc: string | undefined;
   fbp: string | undefined;
   clientIp: string | undefined;
   clientUserAgent: string | undefined;
+  valueRupees: number;
+  currency: string;
 }) {
-  const hashedEmail = crypto.createHash('sha256').update(params.email.trim().toLowerCase()).digest('hex');
-  // Normalise phone to digits only (E.164 without +) before hashing
+  const hashedEmail = sha256(params.email.trim().toLowerCase());
+
+  // Phone: digits only (E.164 without +) before hashing.
   const rawPhone = params.phone.replace(/\D/g, '');
-  const hashedPhone = rawPhone ? crypto.createHash('sha256').update(rawPhone).digest('hex') : undefined;
+  const hashedPhone = rawPhone ? sha256(rawPhone) : undefined;
+
+  // Per Meta spec: fn/ln are lowercase + trim. ct is lowercase a-z only (no
+  // whitespace/punctuation). country is lowercase 2-letter ISO. Adding these
+  // raises Event Match Quality so Meta can attribute the conversion back to
+  // ad clicks more reliably.
+  const fn = params.firstName.trim().toLowerCase();
+  const ln = params.lastName.trim().toLowerCase();
+  const ct = params.city.trim().toLowerCase().replace(/[^a-z]/g, '');
+  const country = params.countryCode.trim().toLowerCase();
+
+  const hashedFn = fn ? sha256(fn) : undefined;
+  const hashedLn = ln ? sha256(ln) : undefined;
+  const hashedCt = ct ? sha256(ct) : undefined;
+  const hashedCountry = country ? sha256(country) : undefined;
 
   const event = {
     event_name: 'Webinar Purchase',
     event_time: Math.floor(Date.now() / 1000),
     event_id: params.paymentId,
     action_source: 'website',
+    // Required for action_source=website. Without it Meta drops the event
+    // from reporting/optimisation and flags a diagnostic warning.
+    event_source_url: params.eventSourceUrl,
     user_data: {
       em: [hashedEmail],
       ...(hashedPhone && { ph: [hashedPhone] }),
+      ...(hashedFn && { fn: [hashedFn] }),
+      ...(hashedLn && { ln: [hashedLn] }),
+      ...(hashedCt && { ct: [hashedCt] }),
+      ...(hashedCountry && { country: [hashedCountry] }),
       ...(params.fbc && { fbc: params.fbc }),
       ...(params.fbp && { fbp: params.fbp }),
       ...(params.clientUserAgent && { client_user_agent: params.clientUserAgent }),
       ...(params.clientIp && { client_ip_address: params.clientIp }),
     },
     custom_data: {
-      currency: 'INR',
-      value: 97,
+      currency: params.currency,
+      value: params.valueRupees,
       payment_id: params.paymentId,
     },
   };
@@ -81,12 +114,16 @@ export async function POST(req: NextRequest) {
       signature,
       customer,
       utm,
+      amount: amountPaise,
+      eventSourceUrl,
     }: {
       orderId: string;
       paymentId: string;
       signature: string;
       customer: CustomerData;
       utm: UtmData;
+      amount?: number | string;
+      eventSourceUrl?: string;
     } = body;
 
     if (!orderId || !paymentId || !signature) {
@@ -119,6 +156,12 @@ export async function POST(req: NextRequest) {
 
     // Payment verified — build payload and fire Pabbly webhook (non-blocking)
     const now = new Date();
+    // Resolve amount paid (paise → rupees). Client sends the order amount from
+    // Razorpay so CAPI value isn't hardcoded; fall back to ₹97 if missing.
+    const paidPaiseNumeric = typeof amountPaise === 'string' ? Number(amountPaise) : amountPaise;
+    const paidRupees = Number.isFinite(paidPaiseNumeric) && (paidPaiseNumeric as number) > 0
+      ? (paidPaiseNumeric as number) / 100
+      : 97;
     const pabblyPayload = {
       // Customer
       first_name:        customer.firstName,
@@ -131,7 +174,7 @@ export async function POST(req: NextRequest) {
       // Payment
       payment_id:        paymentId,
       order_id:          orderId,
-      amount:            '97',
+      amount:            String(paidRupees),
       currency:          'INR',
       payment_date:      now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' }),
       payment_time:      now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' }),
@@ -179,6 +222,11 @@ export async function POST(req: NextRequest) {
         ?? undefined;
       const clientUserAgent = req.headers.get('user-agent') ?? undefined;
       const fullPhone = `${customer.dialCode}${customer.phone}`;
+      // Meta requires event_source_url for action_source=website. Prefer the
+      // URL the client was on when the purchase completed; fall back to the
+      // request referer if the client didn't send one.
+      const resolvedEventSourceUrl =
+        eventSourceUrl ?? req.headers.get('referer') ?? '';
       try {
         const capiResult = await sendMetaCapiEvent({
           pixelId: metaPixelId,
@@ -186,10 +234,17 @@ export async function POST(req: NextRequest) {
           paymentId,
           email: customer.email,
           phone: fullPhone,
+          firstName: customer.firstName,
+          lastName: customer.lastName,
+          city: customer.city,
+          countryCode: customer.countryCode,
+          eventSourceUrl: resolvedEventSourceUrl,
           fbc,
           fbp,
           clientIp,
           clientUserAgent,
+          valueRupees: paidRupees,
+          currency: 'INR',
         });
         console.log('[verify-payment] Meta CAPI event sent:', capiResult);
       } catch (err) {
