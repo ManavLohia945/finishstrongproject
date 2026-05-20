@@ -60,7 +60,7 @@ export const clientConfig = {
     currency: "₹",
     priceNow: "97",
     priceWas: "199",
-    seatsTotal: 50,
+    seatsTotal: 21,
   },
 
   // ── Audience Popup (legacy — not shown on main funnel) ────────────────────

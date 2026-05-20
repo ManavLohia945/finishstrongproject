@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
+import { setMetaAdvancedMatching } from '@/lib/analytics';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -449,7 +450,7 @@ export default function CheckoutForm() {
         },
         theme: { color: '#E8360A' },
         handler: async (response: RazorpayResponse) => {
-          await handlePaymentSuccess(response, selectedCountry.dial);
+          await handlePaymentSuccess(response, selectedCountry.dial, amount ?? 9700);
         },
         modal: {
           ondismiss: () => {
@@ -466,7 +467,7 @@ export default function CheckoutForm() {
     }
   }
 
-  async function handlePaymentSuccess(response: RazorpayResponse, dialCode: string) {
+  async function handlePaymentSuccess(response: RazorpayResponse, dialCode: string, paidAmountPaise: number) {
     try {
       const utm = restoreUtm();
 
@@ -487,6 +488,9 @@ export default function CheckoutForm() {
             dialCode,
           },
           utm,
+          // Actual amount paid (paise) — sent so server CAPI value isn't hardcoded.
+          amount: paidAmountPaise,
+          eventSourceUrl: typeof window !== 'undefined' ? window.location.href : undefined,
         }),
       });
 
@@ -496,20 +500,22 @@ export default function CheckoutForm() {
         throw new Error(result.error ?? 'Payment verification failed.');
       }
 
-      // Meta Pixel Purchase event placeholder — wire when Pixel ID is added
-      // if (typeof window.fbq === 'function') {
-      //   window.fbq('track', 'Purchase', {
-      //     value: 97, currency: 'INR',
-      //     content_name: 'Finish Strong 2-Day Webinar',
-      //   }, { eventID: response.razorpay_payment_id });
-      // }
-
       const tyParams = new URLSearchParams({ funnel: 'marathoner' });
       if (utm.source) tyParams.set('utm_source', utm.source);
       if (utm.medium) tyParams.set('utm_medium', utm.medium);
       if (utm.campaign) tyParams.set('utm_campaign', utm.campaign);
       if (utm.content) tyParams.set('utm_content', utm.content);
       if (utm.term) tyParams.set('utm_term', utm.term);
+      // Set Meta Pixel Advanced Matching BEFORE the redirect so the auto-
+      // PageView that fires on /thank-you carries hashed user identity.
+      setMetaAdvancedMatching({
+        email: fields.email,
+        phone: `${dialCode}${fields.phone}`,
+        firstName: fields.firstName,
+        lastName: fields.lastName,
+        city: fields.city,
+        country: countryCode,
+      });
       router.push(`/thank-you?${tyParams.toString()}`);
     } catch (err) {
       setLoading(false);
