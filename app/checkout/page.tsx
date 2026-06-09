@@ -5,7 +5,7 @@ import CheckoutForm from '@/components/CheckoutForm';
 
 export const metadata: Metadata = {
   title: 'Secure Checkout — Finish Strong',
-  description: 'Complete your registration for the Finish Strong 2-Day Ironman Webinar.',
+  description: 'Complete your registration for the Finish Strong Ironman Webinar.',
   robots: { index: false, follow: false },
 };
 

@@ -48,11 +48,11 @@ export const clientConfig = {
 
   // ── Event ─────────────────────────────────────────────────────────────────
   event: {
-    dateDisplay: "23rd & 24th May",
-    timeDisplay: "11am – 1pm IST",
+    dateDisplay: "21st June",
+    timeDisplay: "11am IST",
     platform: "Live Zoom Session",
-    countdownTarget: "2026-05-23T05:30:00Z",
-    thankYouCommunityUrl: "https://chat.whatsapp.com/BbWdVQFYwWa966f7c29wnq",
+    countdownTarget: "2026-06-21T05:30:00Z",
+    thankYouCommunityUrl: "https://chat.whatsapp.com/IgrcUDTD6CrCn9ve2wsfTl",
   },
 
   // ── Pricing ───────────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ export const clientConfig = {
     currency: "₹",
     priceNow: "97",
     priceWas: "199",
-    seatsTotal: 21,
+    seatsTotal: 50,
   },
 
   // ── Audience Popup (legacy — not shown on main funnel) ────────────────────
@@ -126,7 +126,7 @@ export const clientConfig = {
       },
       {
         title: "Save the Date",
-        desc: "Block 23rd & 24th May, 11am – 1pm IST in your calendar right now. This is a live session — no recording, no replay.",
+        desc: "Block 21st June, 11am IST in your calendar right now. This is a live session — no recording, no replay.",
       },
       {
         title: "Come Prepared",
@@ -201,7 +201,7 @@ export const clientConfig = {
     heroH1Main: "Crush Your First (or Next)",
     heroH1AnimatedText: "Ironman Goa 70.3 in Sub-6 Hours",
     heroChallengeLine: "Without guessing your training, gambling your pacing, or dying 10km from the finish",
-    heroBodyCopy: "In this 2-day webinar, a 18× Ironman finisher hands you the complete race blueprint for Triathlon — the same Australian-coached system that most Indian athletes spend years trying to piece together on their own, and never quite get right.",
+    heroBodyCopy: "In this webinar, a 18× Ironman finisher hands you the complete 16 weeks Roadmap for acing Ironman Goa 70.3 — the same Australian-coached system that most Indian athletes spend years trying to piece together on their own, and never quite get right.",
     heroImage: "/coach1-alt.png",
     heroImageAlt: "Satyam Sahai — 18× Ironman Finisher",
     heroPersonName: "Satyam & Mitch",
@@ -236,7 +236,7 @@ export const clientConfig = {
     } as WhoCard,
     whoClosingText: "Different starting points. One finish line.",
     whoClosingAccent: "One webinar.",
-    blueprintHeadline: "We'll Cover Your Complete Race Blueprint in 2 Days",
+    blueprintHeadline: "We'll Cover Your Complete Race Blueprint",
     blueprintSub: "Every step is actionable. You leave with a plan, not just notes.",
     blueprintSteps: [
       {

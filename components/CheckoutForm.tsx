@@ -297,7 +297,7 @@ function MobileSummary() {
   return (
     <div className="checkout-summary-mobile" onClick={() => setOpen(o => !o)}>
       <div className="checkout-summary-mobile-bar">
-        <span className="checkout-summary-mobile-title">Finish Strong — 2-Day Webinar</span>
+        <span className="checkout-summary-mobile-title">Finish Strong — Ironman Webinar</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <span className="checkout-summary-mobile-price">₹97</span>
           <span className={`checkout-summary-mobile-chevron${open ? ' open' : ''}`}>▾</span>
@@ -306,14 +306,14 @@ function MobileSummary() {
       <div className={`checkout-summary-expand${open ? ' open' : ''}`}>
         <div className="checkout-summary-expand-inner">
           <div className="checkout-event-pill" style={{ marginBottom: 12 }}>
-            23rd &amp; 24th May · 11am–1pm IST
+            21st June · 11am IST
           </div>
           <div className="checkout-divider" />
           <div className="checkout-value-stack" style={{ marginBottom: 12 }}>
             {[
               'Complete race-day execution blueprint',
               'Live Q&A with Satyam & Mitch',
-              '2 sessions · No recording · Limited seats',
+              '1 session · No recording · Limited seats',
             ].map(item => (
               <div key={item} className="checkout-value-item">
                 <span className="checkout-check">✓</span>
@@ -442,7 +442,7 @@ export default function CheckoutForm() {
         currency: 'INR',
         order_id: orderId,
         name: 'Finish Strong',
-        description: '2-Day Ironman Webinar · 23rd & 24th May',
+        description: 'Ironman Webinar · 21st June',
         prefill: {
           name: `${fields.firstName.trim()} ${fields.lastName.trim()}`,
           email: fields.email.trim(),
@@ -730,9 +730,9 @@ export default function CheckoutForm() {
         {/* ── Right: Order Summary ── */}
         <aside className="checkout-summary" aria-label="Order summary">
           <p className="checkout-summary-label">ORDER SUMMARY</p>
-          <h2 className="checkout-product-name">Finish Strong — 2-Day Webinar</h2>
+          <h2 className="checkout-product-name">Finish Strong — Ironman Webinar</h2>
           <div className="checkout-event-pill">
-            23rd &amp; 24th May · 11am–1pm IST
+            21st June · 11am IST
           </div>
 
           <div className="checkout-divider" />
@@ -741,7 +741,7 @@ export default function CheckoutForm() {
             {[
               'Complete race-day execution blueprint',
               'Live Q&A with Satyam & Mitch',
-              '2 sessions · No recording · Limited seats',
+              '1 session · No recording · Limited seats',
             ].map(item => (
               <div key={item} className="checkout-value-item">
                 <span className="checkout-check">✓</span>
