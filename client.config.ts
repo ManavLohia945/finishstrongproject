@@ -48,10 +48,10 @@ export const clientConfig = {
 
   // ── Event ─────────────────────────────────────────────────────────────────
   event: {
-    dateDisplay: "21st June",
+    dateDisplay: "12th July",
     timeDisplay: "11am IST",
     platform: "Live Zoom Session",
-    countdownTarget: "2026-06-21T05:30:00Z",
+    countdownTarget: "2026-07-12T05:30:00Z",
     thankYouCommunityUrl: "https://chat.whatsapp.com/IgrcUDTD6CrCn9ve2wsfTl",
   },
 
@@ -126,7 +126,7 @@ export const clientConfig = {
       },
       {
         title: "Save the Date",
-        desc: "Block 21st June, 11am IST in your calendar right now. This is a live session — no recording, no replay.",
+        desc: "Block 12th July, 11am IST in your calendar right now. This is a live session — no recording, no replay.",
       },
       {
         title: "Come Prepared",

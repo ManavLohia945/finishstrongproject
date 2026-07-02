@@ -306,7 +306,7 @@ function MobileSummary() {
       <div className={`checkout-summary-expand${open ? ' open' : ''}`}>
         <div className="checkout-summary-expand-inner">
           <div className="checkout-event-pill" style={{ marginBottom: 12 }}>
-            21st June · 11am IST
+            12th July · 11am IST
           </div>
           <div className="checkout-divider" />
           <div className="checkout-value-stack" style={{ marginBottom: 12 }}>
@@ -442,7 +442,7 @@ export default function CheckoutForm() {
         currency: 'INR',
         order_id: orderId,
         name: 'Finish Strong',
-        description: 'Ironman Webinar · 21st June',
+        description: 'Ironman Webinar · 12th July',
         prefill: {
           name: `${fields.firstName.trim()} ${fields.lastName.trim()}`,
           email: fields.email.trim(),
@@ -732,7 +732,7 @@ export default function CheckoutForm() {
           <p className="checkout-summary-label">ORDER SUMMARY</p>
           <h2 className="checkout-product-name">Finish Strong — Ironman Webinar</h2>
           <div className="checkout-event-pill">
-            21st June · 11am IST
+            12th July · 11am IST
           </div>
 
           <div className="checkout-divider" />
